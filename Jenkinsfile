@@ -5,9 +5,6 @@ node {
     try {
         def nodeHome = tool 'Node 7.9'
         env.PATH="${env.PATH}:${nodeHome}/bin"
-        def dockerHome = tool 'Latest Docker'
-        env.PATH="${env.PATH}:${dockerHome}/bin"
-        echo "Running ${env.PATH}"
 
         stage('Checkout'){
             checkout scm
@@ -25,12 +22,8 @@ node {
 
         stage('Publish Docker Image'){
             print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"
-            docker.withRegistry('https://cloud.docker.com', 'Brian-Docker-Registry') {
-                sh 'pwd'
-                sh 'ls'
-                def hwImage = docker.build("brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}", '.')
-                hwImage.push();
-            }
+            def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"
+            hwImage.push()
         }
 
         stage('Cleanup'){
