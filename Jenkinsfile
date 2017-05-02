@@ -21,10 +21,11 @@ node {
         }
 
         stage('Publish Docker Image'){
-            print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"
+            sh 'which docker;docker version'
+            print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
             def nginx = docker.image('nginx')
             nginx.pull()
-            def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"
+            def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
             hwImage.push()
         }
 
