@@ -1,0 +1,12 @@
+# Node
+node_modules/
+npm-debug.log
+.npmrc
+
+# OS Files
+.DS_Store
+
+# IDE Settings
+.idea/*
+
+dist/
