@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                env.NODE_ENV = "build"
                 print "Environment: ${env.NODE_ENV}"
                 echo "Running ${env.BUILD_ID}"
                 sh 'npm --version'
@@ -18,6 +17,7 @@ pipeline {
         }
         stage('Publish Docker Image') {
             steps {
+                echo 'docker build -t helloworld-1.0.${env.BUILD_TAG} .'
                 sh 'docker build -t helloworld-1.0.${env.BUILD_TAG} .'
                 sh 'docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}'
             }
