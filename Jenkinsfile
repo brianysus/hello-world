@@ -12,7 +12,8 @@ pipeline {
                 sh 'npm --version'
                 sh 'pwd'
                 sh 'ls'
-                sh 'npm install build'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
         stage('Test') {
