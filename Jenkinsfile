@@ -1,8 +1,11 @@
-node {
+node('node') {
 
     currentBuild.result = "SUCCESS"
 
     try {
+        tools {
+            nodejs 'Node 7.9'
+        }
 
        stage('Checkout'){
 
