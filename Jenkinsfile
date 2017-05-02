@@ -15,8 +15,6 @@ node {
             print "Environment: ${env.NODE_ENV}"
             echo "Running ${env.BUILD_ID}"
             sh 'npm --version'
-            sh 'pwd'
-            sh 'ls'
             sh 'npm install'
             sh 'npm run build'
 
@@ -24,6 +22,10 @@ node {
 
         stage('Publish Docker Image'){
             docker.withRegistry('registry.hub.docker.com', 'Brian-Docker-Registry') {
+
+                sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"'
+                sh 'pwd'
+                sh 'ls'
                 def hwImage = docker.build("brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}", '.')
                 hwImage.push();
             }
