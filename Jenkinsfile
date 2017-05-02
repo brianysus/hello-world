@@ -5,6 +5,8 @@ node {
     try {
         def nodeHome = tool 'Node 7.9'
         env.PATH="${env.PATH}:${nodeHome}/bin"
+        def dockerHome = tool 'Latest Docker'
+        env.PATH="${env.PATH}:${dockerHome}/bin"
 
         stage('Checkout'){
             checkout scm
