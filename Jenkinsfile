@@ -22,11 +22,13 @@ node {
 
         stage('Publish Docker Image'){
             print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"
-            docker.withRegistry('https://cloud.docker.com', 'Brian-Docker-Registry') {
-                sh 'pwd'
-                sh 'ls'
-                def hwImage = docker.build("brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}", '.')
-                hwImage.push();
+            docker.withTool('Latest Docker') {
+                docker.withRegistry('https://cloud.docker.com', 'Brian-Docker-Registry') {
+                    sh 'pwd'
+                    sh 'ls'
+                    def hwImage = docker.build("brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}", '.')
+                    hwImage.push();
+                }
             }
         }
 
