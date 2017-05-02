@@ -21,7 +21,8 @@ node {
         }
 
         stage('Publish Docker Image'){
-            docker.withRegistry('registry.hub.docker.com', 'Brian-Docker-Registry') {
+            sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"'
+            docker.withRegistry('https://cloud.docker.com', 'Brian-Docker-Registry') {
 
                 sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"'
                 sh 'pwd'
@@ -41,6 +42,7 @@ node {
     }
     catch (err) {
         currentBuild.result = "FAILURE"
+        echo err
         throw err
     }
 
