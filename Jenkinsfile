@@ -22,10 +22,11 @@ pipeline {
                 sh 'docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}'
             }
         }
-
         stage('Cleanup'){
-            sh 'npm prune'
-            sh 'rm node_modules -rf'
+            steps {
+                sh 'npm prune'
+                sh 'rm node_modules -rf'
+            }
         }
     }
 }
