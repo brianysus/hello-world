@@ -3,9 +3,8 @@ node {
     currentBuild.result = "SUCCESS"
 
     try {
-        tools {
-            nodejs 'Node 7.9'
-        }
+        def nodeHome = tool 'Node 7.9'
+        env.PATH="${env.PATH}:${nodeHome}/bin"
 
        stage('Checkout'){
 
