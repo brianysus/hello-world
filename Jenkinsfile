@@ -21,7 +21,8 @@ node {
         }
 
         stage('Publish Docker Image'){
-            sh 'which docker;docker version'
+            echo $(which docker)
+            echo $(docker --version)
             print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
             def nginx = docker.image('nginx')
             nginx.pull()
