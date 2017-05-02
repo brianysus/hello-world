@@ -21,10 +21,10 @@ node {
         }
 
         stage('Publish Docker Image'){
-            sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"'
+            sh 'echo brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}'
             docker.withRegistry('https://cloud.docker.com', 'Brian-Docker-Registry') {
 
-                sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"'
+                sh 'echo brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}'
                 sh 'pwd'
                 sh 'ls'
                 def hwImage = docker.build("brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}", '.')
