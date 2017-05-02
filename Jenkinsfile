@@ -1,34 +1,25 @@
-node {
+pipeline {
+    agent any
 
-    currentBuild.result = "SUCCESS"
-
-    try {
-        def nodeHome = tool 'Node 7.9'
-        env.PATH="${env.PATH}:${nodeHome}/bin"
-        def dockerHome = tool 'Latest Docker'
-        env.PATH="${env.PATH}:${dockerHome}/bin"
-
-        stage('Checkout'){
-            checkout scm
+    tools {
+        nodejs 'Node 7.9'
+        docker 'Latest Docker'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                env.NODE_ENV = "build"
+                print "Environment: ${env.NODE_ENV}"
+                echo "Running ${env.BUILD_ID}"
+                sh 'npm --version'
+                sh 'npm install'
+                sh 'npm run build'
+            }
         }
-
-        stage('Build'){
-            env.NODE_ENV = "build"
-            print "Environment: ${env.NODE_ENV}"
-            echo "Running ${env.BUILD_ID}"
-            sh 'npm --version'
-            sh 'npm install'
-            sh 'npm run build'
-
-        }
-
-        stage('Publish Docker Image'){
-            print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}"
-            docker.withRegistry('https://cloud.docker.com', 'Brian-Docker-Registry') {
-                sh 'pwd'
-                sh 'ls'
-                def hwImage = docker.build("brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}", '.')
-                hwImage.push();
+        stage('Publish Docker Image') {
+            steps {
+                sh 'docker build -t helloworld-1.0.${env.BUILD_TAG} .'
+                sh 'docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_TAG}'
             }
         }
 
@@ -36,14 +27,5 @@ node {
             sh 'npm prune'
             sh 'rm node_modules -rf'
         }
-
-
-
     }
-    catch (err) {
-        currentBuild.result = "FAILURE"
-        echo err
-        throw err
-    }
-
 }
