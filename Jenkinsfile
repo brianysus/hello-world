@@ -7,6 +7,7 @@ node {
         env.PATH="${env.PATH}:${nodeHome}/bin"
         def dockerHome = tool 'Latest Docker'
         env.PATH="${env.PATH}:${dockerHome}/bin"
+        print "PATH: ${env.PATH}"
 
         stage('Checkout'){
             checkout scm
