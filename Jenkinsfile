@@ -24,11 +24,13 @@ node {
         }
 
         stage('Publish Docker Image'){
-            sh 'docker --version'
-            sh 'which docker'
-            print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
-            def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
-            hwImage.push()
+            docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
+                sh 'docker --version'
+                sh 'which docker'
+                print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
+                def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
+                hwImage.push()
+            }
         }
 
         stage('Cleanup'){
