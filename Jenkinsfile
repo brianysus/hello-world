@@ -25,8 +25,8 @@ node {
         stage('Publish Docker Image'){
             docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
                 sh "sudo docker version"
-                sh "sudo docker build -t ${env.repo}${env.imageTag} ."
-                sh "sudo docker push ${env.repo}${env.imageTag}"
+                sh "sudo docker build -t ${repo}${imageTag} ."
+                sh "sudo docker push ${repo}${imageTag}"
             }
         }
 
@@ -34,7 +34,7 @@ node {
             sh "npm prune"
             sh "rm node_modules -rf"
             sh "sudo docker rmi \$(docker images -f dangling=true -q)"
-            sh "sudo docker images | grep ${env.imageTag} | awk '{print \$3}' | xargs sudo docker rmi"
+            sh "sudo docker images | grep ${imageTag} | awk '{print \$3}' | xargs sudo docker rmi"
         }
 
 
