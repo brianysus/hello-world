@@ -30,10 +30,14 @@ node {
             }
         }
 
+        stage('Test') {
+             print "Could run tests here"
+        }
+
         stage('Cleanup'){
             sh "npm prune"
             sh "rm node_modules -rf"
-            sh "sudo docker rmi \$(sudo docker images -f dangling=true -q)"
+            sh "sudo docker rmi \$(sudo docker images -f dangling=true -q) || true"
             sh "sudo docker images | grep ${imageTag} | awk '{print \$3}' | xargs sudo docker rmi"
         }
 
