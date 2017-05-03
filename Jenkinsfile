@@ -24,7 +24,6 @@ node {
 
         stage('Publish Docker Image'){
             sh 'docker --version'
-            sh 'docker status'
             sh 'which docker'
             print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
             def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
