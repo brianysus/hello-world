@@ -24,7 +24,7 @@ node {
             docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
                 sh "sudo docker version"
                 sh "sudo docker build -t brianysus/sandbox:helloworld-1.0.${env.BUILD_ID} ."
-                sh "sudo docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}""
+                sh "sudo docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}"
             }
         }
 
