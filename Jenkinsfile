@@ -3,7 +3,7 @@ node {
 
     try {
         def repo = "brianysus/sandbox"
-        def imageTag = "helloworld-1.0.${env.BUILD_ID}"
+        def imageTag = "web-demo-1.0.${env.BUILD_ID}"
         def nodeHome = tool 'Node 7.9'
         env.PATH="${env.PATH}:${nodeHome}/bin"
         def dockerHome = tool 'Latest Docker'
