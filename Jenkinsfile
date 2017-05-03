@@ -24,11 +24,10 @@ node {
         }
 
         stage('Publish'){
-            docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
-                sh "sudo docker version"
-                sh "sudo docker build -t ${repo}:${imageTag} ."
-                sh "sudo docker push ${repo}:${imageTag}"
-            }
+            sh "sudo docker login"
+            sh "sudo docker version"
+            sh "sudo docker build -t ${repo}:${imageTag} ."
+            sh "sudo docker push ${repo}:${imageTag}"
         }
 
         stage('Deploy') {
