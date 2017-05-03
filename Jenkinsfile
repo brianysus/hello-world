@@ -29,6 +29,10 @@ node {
             sh "sudo docker push ${repo}:${imageTag}"
         }
 
+        stage('Deploy') {
+             print "Could deploy here"
+        }
+
         stage('Cleanup'){
             sh "npm prune"
             sh "rm node_modules -rf"
