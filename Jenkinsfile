@@ -24,7 +24,6 @@ node {
         }
 
         stage('Publish'){
-            sh "sudo docker login"
             sh "sudo docker version"
             sh "sudo docker build -t ${repo}:${imageTag} ."
             sh "sudo docker push ${repo}:${imageTag}"
