@@ -27,9 +27,8 @@ node {
             docker.withRegistry('https://index.docker.io/v1/', 'Brians-Docker') {
                 sh 'docker --version'
                 sh 'which docker'
-                print "Docker image: brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
-                def hwImage = docker.build "brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}"
-                hwImage.push()
+                sh 'docker build -t brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER} .'
+                sh 'docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_NUMBER}'
             }
         }
 
