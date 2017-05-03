@@ -24,7 +24,7 @@ node {
         }
 
         stage('Publish Docker Image'){
-            docker.withRegistry('https://index.docker.io/v1/', 'Brians-Docker') {
+            docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
                 sh 'docker --version'
                 sh 'which docker'
                 sh 'docker build -t brianysus/sandbox:helloworld-1.0.1 .'
