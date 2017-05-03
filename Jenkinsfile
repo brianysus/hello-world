@@ -14,9 +14,7 @@ node {
         }
 
         stage('Build'){
-            env.NODE_ENV = "build"
-            print "Environment: ${env.NODE_ENV}"
-            echo "Running ${env.BUILD_ID}"
+            sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}"'
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
@@ -26,8 +24,8 @@ node {
         stage('Publish Docker Image'){
             docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
                 sh 'sudo docker version'
-                sh 'sudo docker build -t brianysus/sandbox:helloworld-1.0.1 .'
-                sh 'sudo docker push brianysus/sandbox:helloworld-1.0.1'
+                sh 'sudo docker build -t brianysus/sandbox:helloworld-1.0.${env.BUILD_ID} .'
+                sh 'sudo docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}'
             }
         }
 
