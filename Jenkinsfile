@@ -20,17 +20,21 @@ node {
 
         }
 
+        def repo = "brianysus/sandbox"
+        def imageTag = "helloworld-1.0.${env.BUILD_ID}"
         stage('Publish Docker Image'){
             docker.withRegistry('https://index.docker.io/v1/', 'Brian-Docker-Registry') {
                 sh "sudo docker version"
-                sh "sudo docker build -t brianysus/sandbox:helloworld-1.0.${env.BUILD_ID} ."
-                sh "sudo docker push brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}"
+                sh "sudo docker build -t ${env.repo}${env.imageTag} ."
+                sh "sudo docker push ${env.repo}${env.imageTag}"
             }
         }
 
         stage('Cleanup'){
             sh "npm prune"
             sh "rm node_modules -rf"
+            sh "sudo docker rmi $(docker images -f dangling=true -q)"
+            sh "sudo docker images | grep '${env.imageTag}' | awk '{print $3}' | xargs sudo docker rmi"
         }
 
 
