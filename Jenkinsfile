@@ -14,7 +14,7 @@ node {
         }
 
         stage('Build'){
-            sh 'echo "brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}"'
+            sh 'echo \"brianysus/sandbox:helloworld-1.0.${env.BUILD_ID}\"'
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
