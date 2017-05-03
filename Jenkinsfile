@@ -34,7 +34,7 @@ node {
             sh "npm prune"
             sh "rm node_modules -rf"
             sh "sudo docker rmi \$(docker images -f dangling=true -q)"
-            sh "sudo docker images | grep '${env.imageTag}' | awk '{print $3}' | xargs sudo docker rmi"
+            sh "sudo docker images | grep ${env.imageTag} | awk '{print \$3}' | xargs sudo docker rmi"
         }
 
 
